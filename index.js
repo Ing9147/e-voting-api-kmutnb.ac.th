@@ -64,38 +64,38 @@ async function sendTransactions() {
   // console.log(b);
 
     router.get('/',(req,res)=>{
-        res.json({title: "home page"})
+        res.json({"title": "home page"})
     });
 
     //view method
     router.get("/test", async(req,res)=>{
             const test = await contract.test({});
-            res.json({title: test})
+            res.json({"title": test})
         });
 
     router.get("/getAlltopic", async(req,res)=>{
         const getAlltopic = await contract.getAlltopic({});
-        res.json({topic: getAlltopic})
+        res.json({"topic": getAlltopic})
     });
 
     router.get("/getCandidateList/:topic", async(req,res)=>{
         const getCandidateList = await contract.getCandidateList({topic:req.params.topic});
-        res.json({candidate: getCandidateList})
+        res.json({"candidate": getCandidateList})
     });
 
     router.get("/getEventScore/:event", async(req,res)=>{
         const getEventScore = await contract.getEventScore({event:req.params.event});
-        res.json({score: getEventScore})
+        res.json({"score": getEventScore})
     });
 
     router.get("/getUserVotedList/:topic", async(req,res)=>{
         const getUserVotedList = await contract.getUserVotedList({topic:req.params.topic});
-        res.json({user: getUserVotedList})
+        res.json({"user": getUserVotedList})
     });
 
     router.get("/didVoted/:topic/:user", async(req,res)=>{
         const didVoted = await contract.didVoted({topic:req.params.topic, user:req.params.user});
-        res.json({voted: didVoted})
+        res.json({"voted": didVoted})
     });
     
     //change method
@@ -109,27 +109,27 @@ async function sendTransactions() {
 
     router.get("/addToTopicArray/:topic", async(req,res)=>{
         const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic});
-        res.json({"status": "Done", function: addToTopicArray})
+        res.json({"status": "Done", "addToTopicArray": addToTopicArray})
     });
 
     router.get("/addCandidate/:topic/:name", async(req,res)=>{
         const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic,name:req.params.name});
-        res.json({"status": "Done", function: addCandidate})
+        res.json({"status": "Done", "addCandidate": addCandidate})
     });
 
     router.get("/addVote/:topic/:name/:user", async(req,res)=>{
         const addVote = await contract.addVote({topic:req.params.topic, name:req.params.name, user:req.params.user});
-        res.json({"status": "Done", function: addVote})
+        res.json({"status": "Done", "addVote": addVote})
     });
 
     router.get("/eventEnd/:topic", async(req,res)=>{
         const eventEnd = await contract.eventEnd({topic:req.params.topic});
-        res.json({"status": "Done", function: eventEnd})
+        res.json({"status": "Done", "eventEnd": eventEnd})
     });
 
     router.get("/clearTopicArray/", async(req,res)=>{
         const clearTopicArray = await contract.clearTopicArray({});
-        res.json({"status": "Done", function: clearTopicArray})
+        res.json({"status": "Done", "clearTopicArray": clearTopicArray})
     });
 
 };
