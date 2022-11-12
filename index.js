@@ -113,7 +113,7 @@ async function sendTransactions() {
     });
 
     router.get("/addCandidate/:topic/:name", async(req,res)=>{
-        const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic,name:req.params.name});
+        const addToTopicArray = await contract.addCandidate({topic:req.params.topic,name:req.params.name});
         res.json({"status": "Done", "addCandidate": addCandidate})
     });
 
