@@ -31,7 +31,7 @@ async function sendTransactions() {
 
   const contract = new Contract(
     account, // the account object that is connecting
-    "nearvote.nosugar.testnet",
+    "votekmutnb.nosugar.testnet",
     {
         // name of contract you're connecting to
         viewMethods: [
