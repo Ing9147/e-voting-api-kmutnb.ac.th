@@ -9,7 +9,6 @@ const CREDENTIALS_DIR = ".near-credentials";
 const CONTRACT_NAME = "nosugar.testnet";
 
 const credentialsPath = path.join('./', CREDENTIALS_DIR);
-console.log(credentialsPath)
 const keyStore = new keyStores.UnencryptedFileSystemKeyStore(credentialsPath);
 
 const config = {
@@ -59,13 +58,13 @@ async function sendTransactions() {
   // console.log(b);
 
     router.get('/',(req,res)=>{
-        res.send('home page')
+        res.json({title: 'home page'})
     });
 
     //view method
     router.get("/test", async(req,res)=>{
             const test = await contract.test({});
-            res.send(test)
+            res.json({title: test})
         });
 
     router.get("/getAlltopic", async(req,res)=>{
