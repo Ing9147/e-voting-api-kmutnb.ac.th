@@ -1,4 +1,4 @@
-const { connect, transactions, keyStores, Contract } = require("near-api-js");
+const { connect, transactions, keyStores, Contract, KeyPair  } = require("near-api-js");
 const express = require('express');
 const router = express.Router();
 const path = require("path");
@@ -7,9 +7,14 @@ let port = process.env.PORT || 3000;
 
 const CREDENTIALS_DIR = ".near-credentials";
 const CONTRACT_NAME = "nosugar.testnet";
+const PRIVATE_KEY =
+  "9nWTczNTNQjKiVqmc82ZCpNjLoAxyMSJYpP2avtMwDQ8UnznYAPApQcNfMiBBNHSMvSekvArijtPVvuwwYTKieu";
+  const keyPair = KeyPair.fromString(PRIVATE_KEY);
 
 const credentialsPath = path.join('./', CREDENTIALS_DIR);
-const keyStore = new keyStores.UnencryptedFileSystemKeyStore(credentialsPath);
+console.log(credentialsPath)
+const keyStore = new keyStores.InMemoryKeyStore();
+// const keyStore = new keyStores.UnencryptedFileSystemKeyStore(credentialsPath);
 
 const config = {
     keyStore,
@@ -20,6 +25,7 @@ const config = {
 sendTransactions();
 
 async function sendTransactions() {
+    await keyStore.setKey("testnet", CONTRACT_NAME, keyPair);
   const near = await connect({ ...config, keyStore });
   const account = await near.account(CONTRACT_NAME);
 
