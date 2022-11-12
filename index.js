@@ -103,27 +103,27 @@ async function sendTransactions() {
 
     router.get("/addToTopicArray/:topic", async(req,res)=>{
         const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic});
-        res.json({"status": "Done", addToTopicArray})
+        res.json({"status": "Done", function: addToTopicArray})
     });
 
     router.get("/addCandidate/:topic/:name", async(req,res)=>{
         const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic,name:req.params.name});
-        res.json({"status": "Done", addCandidate})
+        res.json({"status": "Done", function: addCandidate})
     });
 
     router.get("/addVote/:topic/:name/:user", async(req,res)=>{
         const addVote = await contract.addVote({topic:req.params.topic, name:req.params.name, user:req.params.user});
-        res.json({"status": "Done", addVote})
+        res.json({"status": "Done", function: addVote})
     });
 
     router.get("/eventEnd/:topic", async(req,res)=>{
         const eventEnd = await contract.eventEnd({topic:req.params.topic});
-        res.json({"status": "Done", eventEnd})
+        res.json({"status": "Done", function: eventEnd})
     });
 
     router.get("/clearTopicArray/", async(req,res)=>{
         const clearTopicArray = await contract.clearTopicArray({});
-        res.json({"status": "Done", clearTopicArray})
+        res.json({"status": "Done", function: clearTopicArray})
     });
 
 };
