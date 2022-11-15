@@ -89,30 +89,30 @@ async function sendTransactions() {
 
     router.get("/getCandidateList/:topic", async(req,res)=>{
         let topic = ({topic:req.params.topic});
-        let getCandidateList = await contract.getCandidateList({topic});
+        let getCandidateList = await contract.getCandidateList({topic:req.params.topic});
 
         res.json({
-            "topic": topic,
+            "topic": req.params.topic,
             "candidate": getCandidateList
         })
     });
 
     router.get("/getEventScore/:event", async(req,res)=>{
         let event = ({event:req.params.event});
-        let getEventScore = await contract.getEventScore({event});
+        let getEventScore = await contract.getEventScore({event:req.params.event});
 
         res.json({
-            "event": event,
+            "event": req.params.event,
             "score": getEventScore
         })
     });
 
     router.get("/getUserVotedList/:topic", async(req,res)=>{
         let topic = ({topic:req.params.topic});
-        let getUserVotedList = await contract.getUserVotedList({topic});
+        let getUserVotedList = await contract.getUserVotedList({event:req.params.event});
 
         res.json({
-            "topic": topic,
+            "topic": req.params.topic,
             "user": getUserVotedList
         })
     });
@@ -120,10 +120,10 @@ async function sendTransactions() {
     router.get("/didVoted/:topic/:user", async(req,res)=>{
         let topic = ({topic:req.params.topic});
         let user = ({user:req.params.user});
-        let didVoted = await contract.didVoted({topic, user});
+        let didVoted = await contract.didVoted({topic:req.params.topic, user:req.params.user});
 
         res.json({
-            "topic": topic,
+            "topic": req.params.topic,
             "user": user,
             "voted": didVoted
         })
@@ -131,8 +131,8 @@ async function sendTransactions() {
 
     router.get("winner/:topic", async(req,res)=>{
         let topic = ({topic:req.params.topic});
-        let candidateList = [await contract.getCandidateList({topic})];
-        let score = [await contract.getEventScore({event:req.params.event})];
+        let candidateList = [await contract.getCandidateList({topic:req.params.topic})];
+        let score = [await contract.getEventScore({event:req.params.topic})];
         let most = 0;
         let tmpArr = [];
         for(i = 0 ; i <= score.length ; i++){
@@ -143,7 +143,7 @@ async function sendTransactions() {
           }
 
           res.json({
-            "topic": topic,
+            "topic": req.params.topic,
             "winner": tmpArr,
             "score": most
         })
@@ -163,7 +163,7 @@ async function sendTransactions() {
         const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic});
 
         res.json({
-            "topic": topic,
+            "topic": req.params.topic,
             "addToTopicArray": addToTopicArray, 
             })
     });
@@ -174,8 +174,8 @@ async function sendTransactions() {
         const addCandidate = await contract.addCandidate({topic:req.params.topic,name:req.params.name});
 
         res.json({
-            "topic": topic,
-            "candidate": candidate,
+            "topic": req.params.topic,
+            "candidate": req.params.name,
             "addCandidate": addCandidate
         })
     });
@@ -186,9 +186,9 @@ async function sendTransactions() {
         let user = {user:req.params.user};
         const addVote = await contract.addVote({topic:req.params.topic, name:req.params.name, user:req.params.user});
         res.json({
-            "topic": topic,
-            "candidate": candidate,
-            "user": user,
+            "topic": req.params.topic,
+            "candidate": req.params.name,
+            "user": req.params.user,
             "addVote": addVote
         })
     });
@@ -197,7 +197,7 @@ async function sendTransactions() {
         let topic = ({topic:req.params.topic});
         const eventEnd = await contract.eventEnd({topic:req.params.topic});
         res.json({
-            "topic": topic,
+            "topic": req.params.topic,
             "eventEnd": eventEnd
         })
     });
