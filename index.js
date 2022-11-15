@@ -145,7 +145,9 @@ async function sendTransactions() {
           res.json({
             "topic": req.params.topic,
             "winner": tmpArr,
-            "score": most
+            "score": most,
+            "useScore": score,
+            "userList": candidateList
         })
     });
     
