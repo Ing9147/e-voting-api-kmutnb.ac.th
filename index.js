@@ -131,8 +131,8 @@ async function sendTransactions() {
 
     router.get("/winner/:topic", async(req,res)=>{
         let topic = ({topic:req.params.topic});
-        let candidateList = [await contract.getCandidateList({topic:req.params.topic})];
-        let score = [await contract.getEventScore({event:req.params.topic})];
+        let candidateList = await contract.getCandidateList({topic:req.params.topic});
+        let score = await contract.getEventScore({event:req.params.topic});
         let most = 0;
         let tmpArr = [];
         for(i = 0 ; i <= score.length ; i++){
