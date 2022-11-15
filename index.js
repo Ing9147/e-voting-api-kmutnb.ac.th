@@ -69,33 +69,48 @@ async function sendTransactions() {
 
     //view method
     router.get("/test", async(req,res)=>{
-            const test = await contract.test({});
+            let test = await contract.test({});
             res.json({"title": test})
         });
 
     router.get("/getAlltopic", async(req,res)=>{
-        const getAlltopic = await contract.getAlltopic({});
+        let getAlltopic = await contract.getAlltopic({});
         res.json({"topic": getAlltopic})
     });
 
     router.get("/getCandidateList/:topic", async(req,res)=>{
-        const getCandidateList = await contract.getCandidateList({topic:req.params.topic});
+        let getCandidateList = await contract.getCandidateList({topic:req.params.topic});
         res.json({"candidate": getCandidateList})
     });
 
     router.get("/getEventScore/:event", async(req,res)=>{
-        const getEventScore = await contract.getEventScore({event:req.params.event});
+        let getEventScore = await contract.getEventScore({event:req.params.event});
         res.json({"score": getEventScore})
     });
 
     router.get("/getUserVotedList/:topic", async(req,res)=>{
-        const getUserVotedList = await contract.getUserVotedList({topic:req.params.topic});
+        let getUserVotedList = await contract.getUserVotedList({topic:req.params.topic});
         res.json({"user": getUserVotedList})
     });
 
     router.get("/didVoted/:topic/:user", async(req,res)=>{
-        const didVoted = await contract.didVoted({topic:req.params.topic, user:req.params.user});
+        let didVoted = await contract.didVoted({topic:req.params.topic, user:req.params.user});
         res.json({"voted": didVoted})
+    });
+
+    router.get("winner/:topic", async(req,res)=>{
+        let candidateList = [await contract.getCandidateList({topic:req.params.topic})];
+        let score = [await contract.getEventScore({event:req.params.event})];
+        let most = 0;
+        let tmpArr = [];
+        for(i = 0 ; i <= score.length ; i++){
+            if(score[i]>most) most = score[i];
+          }
+          for(i = 0 ; i <= candidateList.length ; i++){
+            if(score[i]===most) tmpArr.push(candidateList[i]);
+          }
+          console.log(most)
+          return tmpArr;
     });
     
     //change method
