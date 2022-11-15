@@ -129,7 +129,7 @@ async function sendTransactions() {
         })
     });
 
-    router.get("winner/:topic", async(req,res)=>{
+    router.get("/winner/:topic", async(req,res)=>{
         let topic = ({topic:req.params.topic});
         let candidateList = [await contract.getCandidateList({topic:req.params.topic})];
         let score = [await contract.getEventScore({event:req.params.topic})];
