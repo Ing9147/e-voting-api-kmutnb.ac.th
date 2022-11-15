@@ -109,7 +109,7 @@ async function sendTransactions() {
 
     router.get("/getUserVotedList/:topic", async(req,res)=>{
         let topic = ({topic:req.params.topic});
-        let getUserVotedList = await contract.getUserVotedList({event:req.params.event});
+        let getUserVotedList = await contract.getUserVotedList({topic:req.params.topic});
 
         res.json({
             "topic": req.params.topic,
