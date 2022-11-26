@@ -189,8 +189,8 @@ async function sendTransactions() {
     });
 
     router.get("/eventEnd/:topic", async(req,res)=>{
-        const eventEnd = await contract.eventEnd({topic:req.params.topic});
         await delay(5000);
+        const eventEnd = await contract.eventEnd({topic:req.params.topic});
         res.json({
             "topic": req.params.topic,
             "eventEnd": true
