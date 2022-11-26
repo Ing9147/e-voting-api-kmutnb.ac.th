@@ -88,7 +88,6 @@ async function sendTransactions() {
     });
 
     router.get("/getCandidateList/:topic", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
         let getCandidateList = await contract.getCandidateList({topic:req.params.topic});
 
         res.json({
@@ -98,17 +97,19 @@ async function sendTransactions() {
     });
 
     router.get("/getEventScore/:event", async(req,res)=>{
-        let event = ({event:req.params.event});
         let getEventScore = await contract.getEventScore({event:req.params.event});
-
+        let getCandidateList = await contract.getCandidateList({topic:req.params.event});
+        let score = [];
+        for(i = 0 ; i< getCandidateList.length ; i++){
+            score.push(getEventScore[i]);
+        }
         res.json({
             "event": req.params.event,
-            "score": getEventScore
+            "score": score
         })
     });
 
     router.get("/getUserVotedList/:topic", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
         let getUserVotedList = await contract.getUserVotedList({topic:req.params.topic});
 
         res.json({
@@ -118,7 +119,6 @@ async function sendTransactions() {
     });
 
     router.get("/didVoted/:topic/:user", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
         let user = ({user:req.params.user});
         let didVoted = await contract.didVoted({topic:req.params.topic, user:req.params.user});
 
@@ -130,7 +130,6 @@ async function sendTransactions() {
     });
 
     router.get("/winner/:topic", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
         let candidateList = await contract.getCandidateList({topic:req.params.topic});
         let score = await contract.getEventScore({event:req.params.topic});
         let most = 0;
@@ -161,7 +160,6 @@ async function sendTransactions() {
     // });
 
     router.get("/addToTopicArray/:topic", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
         const addToTopicArray = await contract.addToTopicArray({topic:req.params.topic});
 
         res.json({
@@ -171,8 +169,6 @@ async function sendTransactions() {
     });
 
     router.get("/addCandidate/:topic/:name", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
-        let candidate = ({name:req.params.name});
         const addCandidate = await contract.addCandidate({topic:req.params.topic,name:req.params.name});
 
         res.json({
@@ -183,9 +179,6 @@ async function sendTransactions() {
     });
 
     router.get("/addVote/:topic/:name/:user", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
-        let candidate = ({name:req.params.name});
-        let user = {user:req.params.user};
         const addVote = await contract.addVote({topic:req.params.topic, name:req.params.name, user:req.params.user});
         res.json({
             "topic": req.params.topic,
@@ -196,11 +189,10 @@ async function sendTransactions() {
     });
 
     router.get("/eventEnd/:topic", async(req,res)=>{
-        let topic = ({topic:req.params.topic});
         const eventEnd = await contract.eventEnd({topic:req.params.topic});
         res.json({
             "topic": req.params.topic,
-            "eventEnd": eventEnd
+            "eventEnd": true
         })
     });
 
