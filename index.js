@@ -204,7 +204,6 @@ async function sendTransactions() {
             "clearTopicArray": clearTopicArray
         })
     });
-
 };
 
 app.use(router);
