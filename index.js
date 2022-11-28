@@ -189,8 +189,8 @@ async function sendTransactions() {
     });
 
     router.get("/eventEnd/:topic", async(req,res)=>{
-        await delay(5000);
         const eventEnd = await contract.eventEnd({topic:req.params.topic});
+        await new Promise(resolve => setTimeout(resolve, 3000));
         res.json({
             "topic": req.params.topic,
             "eventEnd": true
